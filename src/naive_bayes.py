@@ -44,10 +44,14 @@ class NaiveBayes:
         Returns:
             Dict[int, torch.Tensor]: A dictionary mapping class labels to their estimated prior probabilities.
         """
-        # TODO: Count number of samples for each output class and divide by total of samples
-        class_priors: Dict[int, torch.Tensor] = None
+        # Count number of samples for each output class and divide by total of samples
+        total_samples = labels.shape[0]
+        unique_labels, counts = torch.unique(labels, return_counts=True)
+        probs = [torch.tensor([count/total_samples], dtype=torch.float32) for count in counts]
+        
+        class_priors: Dict[int, torch.Tensor] = {int(label): prob for label, prob in zip(unique_labels, probs)}
         return class_priors
-
+            
     def estimate_conditional_probabilities(
         self, features: torch.Tensor, labels: torch.Tensor, delta: float
     ) -> Dict[int, torch.Tensor]:
