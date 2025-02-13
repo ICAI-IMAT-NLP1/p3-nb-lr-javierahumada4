@@ -19,7 +19,7 @@ def read_sentiment_examples(infile: str) -> List[SentimentExample]:
         A list of SentimentExample objects parsed from the file.
     """
     # Open the file, go line by line, separate sentence and label, tokenize the sentence and create SentimentExample object
-    with open(infile, "r") as f:
+    with open(infile, "r", encoding="utf-8") as f:
         lines = f.readlines()
         
     examples: List[SentimentExample] = []
